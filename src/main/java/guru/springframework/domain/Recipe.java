@@ -1,163 +1,148 @@
 package guru.springframework.domain;
 
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-
+/**
+ * Created by jt on 6/13/17.
+ */
 @Entity
 public class Recipe {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; 
-	
-	private String description; 
-	private Integer prepTime; 
-	private Integer cookTime; 
-	private Integer servings;
-	private String source;
-	private String url;
-	private String directions; 
-	// todo add 
-	// private Difficulty difficulty; 
-	
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Notes notes;
-	
-	@ManyToMany
-	@JoinTable(name = "recipe_category", 
-			joinColumns = @JoinColumn(name = "recipe_id"), 
-			inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> categories; 
-	
-	@Lob
-	private Byte[] image;
-	
-	@Enumerated(value = EnumType.STRING)
-	private Difficulty difficulty; 
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-	private Set<Ingredient> ingredient;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    private String description;
+    private Integer prepTime;
+    private Integer cookTime;
+    private Integer servings;
+    private String source;
+    private String url;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Lob
+    private String directions;
 
-	public String getDescription() {
-		return description;
-	}
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients = new HashSet<>();
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @Lob
+    private Byte[] image;
 
-	public Integer getPrepTime() {
-		return prepTime;
-	}
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
 
-	public void setPrepTime(Integer prepTime) {
-		this.prepTime = prepTime;
-	}
+    @OneToOne(cascade = CascadeType.ALL)
+    private Notes notes;
 
-	public Integer getCookTime() {
-		return cookTime;
-	}
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+        joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
-	public void setCookTime(Integer cookTime) {
-		this.cookTime = cookTime;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Integer getServings() {
-		return servings;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setServings(Integer servings) {
-		this.servings = servings;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getSource() {
-		return source;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setSource(String source) {
-		this.source = source;
-	}
+    public Integer getPrepTime() {
+        return prepTime;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public void setPrepTime(Integer prepTime) {
+        this.prepTime = prepTime;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public Integer getCookTime() {
+        return cookTime;
+    }
 
-	public String getDirections() {
-		return directions;
-	}
+    public void setCookTime(Integer cookTime) {
+        this.cookTime = cookTime;
+    }
 
-	public void setDirections(String directions) {
-		this.directions = directions;
-	}
+    public Integer getServings() {
+        return servings;
+    }
 
-	public Notes getNotes() {
-		return notes;
-	}
+    public void setServings(Integer servings) {
+        this.servings = servings;
+    }
 
-	public void setNotes(Notes notes) {
-		this.notes = notes;
-	}
+    public String getSource() {
+        return source;
+    }
 
-	public Byte[] getImage() {
-		return image;
-	}
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-	public void setImage(Byte[] image) {
-		this.image = image;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public Difficulty getDifficulty() {
-		return difficulty;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public void setDifficulty(Difficulty difficulty) {
-		this.difficulty = difficulty;
-	}
+    public String getDirections() {
+        return directions;
+    }
 
-	public Set<Ingredient> getIngredient() {
-		return ingredient;
-	}
+    public void setDirections(String directions) {
+        this.directions = directions;
+    }
 
-	public void setIngredient(Set<Ingredient> ingredient) {
-		this.ingredient = ingredient;
-	}
+    public Byte[] getImage() {
+        return image;
+    }
 
-	public Set<Category> getCategories() {
-		return categories;
-	}
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
 
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
-	} 
-	
-	
-	
-	
+    public Notes getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Notes notes) {
+        this.notes = notes;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
 }
